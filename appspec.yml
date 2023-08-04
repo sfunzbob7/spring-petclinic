@@ -10,8 +10,6 @@ permission:
     owner: ubuntu
     group: ubuntu
 hooks:
-  BeforeInstall:
-    - location: scripts/remove_before.sh
   ApplicationStop:
     - location: scripts/kill_process.sh
       timeout: 100
