@@ -10,6 +10,8 @@ permission:
     owner: ubuntu
     group: ubuntu
 hooks:
+  BeforeInstall:
+    - location: scripts/remove_before.sh
   ApplicationStop:
     - location: scripts/kill_process.sh
       timeout: 100
@@ -17,4 +19,7 @@ hooks:
   ApplicationStart:
     - location: scripts/run_process.sh
       timeout: 3600
+      runas: ubuntu
+    - location: scripts/deploy.sh
+      timeout: 60
       runas: ubuntu
