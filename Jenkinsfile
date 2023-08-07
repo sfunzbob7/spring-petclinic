@@ -12,6 +12,8 @@ pipeline {
     DOCKER_TAG = "1.0"
     ECR_REPOSITORY = "257307634175.dkr.ecr.ap-northeast-2.amazonaws.com"
     AWS_SECRET_ACCESS_KEY = "wyVo/vt7idNXowMO4N1VggR5A/6CZrKxh39VXZVA"
+    APPLICATION_NAME = "project02-production-in-place"
+    DEPLOYMENT_GROUP_NAME = "project02-production-in-place"
     ECR_DOCKER_IMAGE = "${ECR_REPOSITORY}/${DOCKER_IMAGE_NAME}"
     ECR_DOCKER_TAG = "${DOCKER_TAG}"
   }
@@ -61,8 +63,8 @@ pipeline {
     stage('CodeDeploy'){
       environment {
         // Set environment variables
-        APPLICATION_NAME = 'project02-production-in-place' // ex: MyApplication
-        DEPLOYMENT_GROUP_NAME = 'project02-production-in-place' // ex: MyDeploymentGroup
+        APPLICATION_NAME = ${env.APPLICATION_NAME} // ex: MyApplication
+        DEPLOYMENT_GROUP_NAME = ${env.DEPLOYMENT_GROUP_NAME} // ex: MyDeploymentGroup
             }
             
         steps {
@@ -70,7 +72,7 @@ pipeline {
           sh 'zip -r project02-deployment.zip .'
 
           // Deploy using CodeDeploy
-          sh "aws deploy create-deployment --region ${env.AWS_REGION} --application-name ${env.APPLICATION_NAME} --deployment-group-name ${env.DEPLOYMENT_GROUP_NAME} --s3-location bucket=project02-terraform-bucket,key=project02-deployment.zip,bundleType=zip"
+          sh "aws deploy create-deployment --region ${env.REGION} --application-name ${env.APPLICATION_NAME} --deployment-group-name ${env.DEPLOYMENT_GROUP_NAME} --s3-location bucket=project02-terraform-bucket,key=project02-deployment.zip,bundleType=zip"
             }
         }
     }
