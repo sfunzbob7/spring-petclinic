@@ -60,8 +60,8 @@ pipeline {
     }
     stage('CodeDeploy'){
       steps {
-              step([$class: 'AWSCodeDeployPublisher', applicationName: 'project02-production-in-place', awsAccessKey: 'AKIATX2F25H7X5KX2IHE', awsSecretKey: "${AWS_SECRET_ACCESS_KEY}", credentials: 'AWSCredentials', deploymentConfig: 'CodeDeployDefault.OneAtATime', deploymentGroupAppspec: false, deploymentGroupName: 'project02-production-in-place', excludes: '', iamRoleArn: '', includes: '**', proxyHost: '', proxyPort: 0, region: 'ap-northeast-2', s3bucket: 'project02-terraform-bucket', s3prefix: '', subdirectory: '', versionFileName: '', waitForCompletion: false])
-            }
+        echo 'CodeDeploy'
+      }
     }
   }
 }
