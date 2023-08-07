@@ -18,6 +18,3 @@ hooks:
     - location: scripts/run_process.sh
       timeout: 3600
       runas: ubuntu
-    - location: scripts/deploy.sh
-      timeout: 60
-      runas: ubuntu
