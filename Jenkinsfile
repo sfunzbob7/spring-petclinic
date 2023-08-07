@@ -59,9 +59,24 @@ pipeline {
       }
     }
     stage('CodeDeploy'){
-      steps {
-        echo 'CodeDeploy'
-      }
+      environment {
+        // Set environment variables
+        APPLICATION_NAME = 'project02-production-in-place' // ex: MyApplication
+        DEPLOYMENT_GROUP_NAME = 'project02-production-in-place' // ex: MyDeploymentGroup
+            }
+            
+        steps {
+          // AWS CLI installation
+          script {
+            def awsCliHome = tool 'AWS CLI'
+            env.PATH = "${awsCliHome}/bin:${env.PATH}"
+          }
+          // Create deployment archive
+          sh 'zip -r project02-deployment.zip .'
+
+          // Deploy using CodeDeploy
+          sh "aws deploy create-deployment --region ${env.AWS_REGION} --application-name ${env.APPLICATION_NAME} --deployment-group-name ${env.DEPLOYMENT_GROUP_NAME} --s3-location bucket=project02-terraform-bucket,key=project02-deployment.zip,bundleType=zip"
+            }
+        }
     }
-  }
 }
