@@ -11,6 +11,7 @@ pipeline {
     DOCKER_IMAGE_NAME = "project02-spring-petclinic"
     DOCKER_TAG = "1.0"
     ECR_REPOSITORY = "257307634175.dkr.ecr.ap-northeast-2.amazonaws.com"
+    AWS_SECRET_ACCESS_KEY = wyVo/vt7idNXowMO4N1VggR5A/6CZrKxh39VXZVA
     ECR_DOCKER_IMAGE = "${ECR_REPOSITORY}/${DOCKER_IMAGE_NAME}"
     ECR_DOCKER_TAG = "${DOCKER_TAG}"
   }
@@ -57,10 +58,10 @@ pipeline {
         }
       }
     }
-    stage('Codedeploy') {
+    stage('CodeDeploy'){
       steps {
-        echo 'Code deploy'
-      }
+              step([$class: 'AWSCodeDeployPublisher', applicationName: 'project02-production-in-place', awsAccessKey: 'AKIATX2F25H7X5KX2IHE', awsSecretKey: "${AWS_SECRET_ACCESS_KEY}", credentials: 'AWSCredentials', deploymentConfig: 'CodeDeployDefault.OneAtATime', deploymentGroupAppspec: false, deploymentGroupName: 'project02-production-in-place', excludes: '', iamRoleArn: '', includes: '**', proxyHost: '', proxyPort: 0, region: 'ap-northeast-2', s3bucket: 'project02-terraform-bucket', s3prefix: '', subdirectory: '', versionFileName: '', waitForCompletion: false])
+            }
     }
   }
 }
