@@ -60,11 +60,5 @@ pipeline {
         }
       }
     }
-#    stage('CodeDeploy'){
-#        steps {
-#          sh 'zip -r project02-deployment.zip .'
-#          sh "aws deploy create-deployment --region ${env.REGION} --application-name ${env.APPLICATION_NAME} --deployment-group-name ${env.DEPLOYMENT_GROUP_NAME} --s3-location bucket=project02-terraform-status,key=project02-deployment.zip,bundleType=zip"
-#            }
-#        }
-    }
+  }
 }
