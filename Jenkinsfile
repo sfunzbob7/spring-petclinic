@@ -61,11 +61,6 @@ pipeline {
       }
     }
     stage('CodeDeploy'){
-      environment {
-        APPLICATION_NAME ${env.APPLICATION_NAME}
-        DEPLOYMENT_GROUP_NAME ${env.DEPLOYMENT_GROUP_NAME}
-            }
-            
         steps {
           sh 'zip -r project02-deployment.zip .'
           sh "aws deploy create-deployment --region ${env.REGION} --application-name ${env.APPLICATION_NAME} --deployment-group-name ${env.DEPLOYMENT_GROUP_NAME} --s3-location bucket=project02-terraform-bucket,key=project02-deployment.zip,bundleType=zip"
