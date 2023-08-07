@@ -63,8 +63,8 @@ pipeline {
     stage('CodeDeploy'){
       environment {
         // Set environment variables
-        APPLICATION_NAME = ${env.APPLICATION_NAME} // ex: MyApplication
-        DEPLOYMENT_GROUP_NAME = ${env.DEPLOYMENT_GROUP_NAME} // ex: MyDeploymentGroup
+        APPLICATION_NAME = ${env.APPLICATION_NAME}
+        DEPLOYMENT_GROUP_NAME = ${env.DEPLOYMENT_GROUP_NAME}
             }
             
         steps {
