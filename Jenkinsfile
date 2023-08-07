@@ -11,7 +11,7 @@ pipeline {
     DOCKER_IMAGE_NAME = "project02-spring-petclinic"
     DOCKER_TAG = "1.0"
     ECR_REPOSITORY = "257307634175.dkr.ecr.ap-northeast-2.amazonaws.com"
-    AWS_SECRET_ACCESS_KEY = "wyVo/vt7idNXowMO4N1VggR5A/6CZrKxh39VXZVA"
+    AWS_SECRET_ACCESS_KEY = "gfp9x4LF86s3PBrHMDBqE97XuKWUedk2YSrBxgkY"
     APPLICATION_NAME = "project02-production-in-place"
     DEPLOYMENT_GROUP_NAME = "project02-production-in-place"
     ECR_DOCKER_IMAGE = "${ECR_REPOSITORY}/${DOCKER_IMAGE_NAME}"
@@ -55,16 +55,16 @@ pipeline {
       steps {
         dir("${env.WORKSPACE}") {
           sh 'zip -r deploy-1.0.zip ./scripts appspec.yml'
-          sh 'aws s3 cp --region ap-northeast-2 --acl private ./deploy-1.0.zip s3://project02-terraform-bucket'
+          sh 'aws s3 cp --region ap-northeast-2 --acl private ./deploy-1.0.zip s3://project02-terraform-status'
           sh 'rm -rf ./deploy-1.0.zip'
         }
       }
     }
-    stage('CodeDeploy'){
-        steps {
-          sh 'zip -r project02-deployment.zip .'
-          sh "aws deploy create-deployment --region ${env.REGION} --application-name ${env.APPLICATION_NAME} --deployment-group-name ${env.DEPLOYMENT_GROUP_NAME} --s3-location bucket=project02-terraform-bucket,key=project02-deployment.zip,bundleType=zip"
-            }
-        }
+#    stage('CodeDeploy'){
+#        steps {
+#          sh 'zip -r project02-deployment.zip .'
+#          sh "aws deploy create-deployment --region ${env.REGION} --application-name ${env.APPLICATION_NAME} --deployment-group-name ${env.DEPLOYMENT_GROUP_NAME} --s3-location bucket=project02-terraform-status,key=project02-deployment.zip,bundleType=zip"
+#            }
+#        }
     }
 }
