@@ -66,11 +66,6 @@ pipeline {
             }
             
         steps {
-          // AWS CLI installation
-          script {
-            def awsCliHome = tool 'AWS CLI'
-            env.PATH = "${awsCliHome}/bin:${env.PATH}"
-          }
           // Create deployment archive
           sh 'zip -r project02-deployment.zip .'
 
