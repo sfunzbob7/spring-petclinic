@@ -15,6 +15,7 @@ pipeline {
     DEPLOYMENT_GROUP_NAME = "project02-production-in-place"
     ECR_DOCKER_IMAGE = "${ECR_REPOSITORY}/${DOCKER_IMAGE_NAME}"
     ECR_DOCKER_TAG = "${DOCKER_TAG}"
+    DEPLOY_CONFIG = "CodeDeployDefault.OneAtATime"
   }
   
   stages {
@@ -63,12 +64,11 @@ pipeline {
       steps {
         script {
           def deploymentCmd = "aws deploy create-deployment" +
-                              " --application-name $APP_NAME" +
-                              " --deployment-group-name $DEPLOY_GROUP" +
+                              " --application-name $APPLICATION_NAME" +
+                              " --deployment-group-name $APPLICATION_NAME" +
                               " --deployment-config-name $DEPLOY_CONFIG" +
-                              " --description \"$DESCRIPTION\"" +
                               " --file-exists-behavior OVERWRITE" +
-                              " --revision revisionType=ECR,imageName=$ECR_REPO_URL/$IMAGE_NAME:latest"
+                              " --revision revisionType=ECR,imageName=$ECR_REPOSITORY/$DOCKER_IMAGE_NAME:latest"
                     sh(deploymentCmd)
         }
       }
