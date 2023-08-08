@@ -11,7 +11,6 @@ pipeline {
     DOCKER_IMAGE_NAME = "project02-spring-petclinic"
     DOCKER_TAG = "1.0"
     ECR_REPOSITORY = "257307634175.dkr.ecr.ap-northeast-2.amazonaws.com"
-    AWS_SECRET_ACCESS_KEY = "gfp9x4LF86s3PBrHMDBqE97XuKWUedk2YSrBxgkY"
     APPLICATION_NAME = "project02-production-in-place"
     DEPLOYMENT_GROUP_NAME = "project02-production-in-place"
     ECR_DOCKER_IMAGE = "${ECR_REPOSITORY}/${DOCKER_IMAGE_NAME}"
