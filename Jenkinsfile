@@ -62,7 +62,7 @@ pipeline {
     stage('CodeDeploy Deploy') {
       steps {
         echo 'Deploying to CodeDeploy...'
-        sh 'codedeploy push --application <project02-production-in-place> --deployment-group <project02-production-in-place> --deployment-config-name <project02-production-in-place> --image-version <latest>'
+        sh 'codedeploy push --application project02-production-in-place --deployment-group project02-production-in-place --deployment-config-name project02-production-in-place --image-version latest'
       }
     }
   }
