@@ -62,26 +62,7 @@ pipeline {
     }
     stage('CodeDeploy Deploy') {
       steps {
-        script {
-          def deploymentCmd = """
-                              aws deploy push \
-                              --application-name project02-production-in-place \
-                              --description "This is Hello CodeDeploy Revision file" \
-                              --ignore-hidden-files \
-                              --s3-location s3://project02-terraform-status/deploy-1.0.zip \
-                              --source .
-                              """
-          sh(deploymentCmd)
-          def deploymentCmd2 = """
-                               aws deploy create-deployment \
-                               --application-name project02-production-in-place \
-                               --s3-location bucket=project02-terraform-status,key=deploy-1.0.zip,bundleType=zip,eTag=5f3159ae1247c79b48df5102a4fcfca3 \
-                               --deployment-group-name project02-production-in-place \
-                               --deployment-config-name $DEPLOY_CONFIG \
-                               --description "THIS IS CODEDEPLOY"
-                               """
-          sh(deploymentCmd2)
-        }
+        step([$class: 'AWSCodeDeployPublisher', applicationName: 'project02-production-in-place', credentials: 'AWSCredentials', deploymentConfig: 'CodeDeployDefault.OneAtATime', deploymentGroupAppspec: false, deploymentGroupName: 'project02-production-in-place', excludes: '', iamRoleArn: '', includes: '',region: "${REGION}", s3bucket: 'project02-terraform-status', s3prefix: '', subdirectory: '', versionFileName: 'deploy-1.0.zip', waitForCompletion: false])
       }
     }
   }
