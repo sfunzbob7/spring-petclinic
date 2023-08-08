@@ -68,7 +68,7 @@ pipeline {
                               " --deployment-group-name $APPLICATION_NAME" +
                               " --deployment-config-name $DEPLOY_CONFIG" +
                               " --file-exists-behavior OVERWRITE" +
-                              " --revision revisionType=ECR,imageName=$ECR_REPOSITORY/$DOCKER_IMAGE_NAME:latest"
+                              " --revision revisionType=ECR,imageName=$ECR_REPOSITORY/$DOCKER_IMAGE_NAME:1.0"
                     sh(deploymentCmd)
         }
       }
