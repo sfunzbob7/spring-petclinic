@@ -59,10 +59,10 @@ pipeline {
         }
       }
     }
-    stage('CodeDeploy'){
+    stage('CodeDeploy Deploy') {
       steps {
-        sh 'zip -r project02-deployment.zip .'
-        sh "aws deploy create-deployment --region ${env.REGION} --application-name ${env.APPLICATION_NAME} --deployment-group-name ${env.DEPLOYMENT_GROUP_NAME} --s3-location bucket=project02-terraform-status,key=project02-deployment.zip,bundleType=zip"
+        echo 'Deploying to CodeDeploy...'
+        sh 'codedeploy push --application <project02-production-in-place> --deployment-group <project02-production-in-place> --deployment-config-name <project02-production-in-place> --image-version <latest>'
       }
     }
   }
