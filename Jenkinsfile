@@ -62,12 +62,14 @@ pipeline {
     stage('CodeDeploy Deploy') {
       steps {
         script {
-          sh """
-            ${awsCLI} deploy create-deployment \
-            --application-name ${APPLICATION_NAME} \
-            --deployment-group-name ${APPLICATION_NAME} \
-            --revision revisionType=Image,imageName=project02-spring-petclinic:${env.BUILD_NUMBER}
-          """
+          def deploymentCmd = "aws deploy create-deployment" +
+                              " --application-name $APP_NAME" +
+                              " --deployment-group-name $DEPLOY_GROUP" +
+                              " --deployment-config-name $DEPLOY_CONFIG" +
+                              " --description \"$DESCRIPTION\"" +
+                              " --file-exists-behavior OVERWRITE" +
+                              " --revision revisionType=ECR,imageName=$ECR_REPO_URL/$IMAGE_NAME:latest"
+                    sh(deploymentCmd)
         }
       }
     }
