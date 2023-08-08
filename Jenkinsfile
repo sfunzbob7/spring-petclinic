@@ -65,9 +65,9 @@ pipeline {
           def awsCLI = tool 'AWS-CLI'
           sh """
             ${awsCLI} deploy create-deployment \
-            --application-name ${project02-production-in-place} \
-            --deployment-group-name ${project02-production-in-place} \
-            --revision revisionType=Image,imageName=${project02-spring-petclinic}:${env.BUILD_NUMBER}
+            --application-name ${APPLICATION_NAME} \
+            --deployment-group-name ${APPLICATION_NAME} \
+            --revision revisionType=Image,imageName=project02-spring-petclinic:${env.BUILD_NUMBER}
           """
         }
       }
