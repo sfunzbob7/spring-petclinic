@@ -51,19 +51,19 @@ pipeline {
         }
       }
     }
-    stage('Upload to S3') {
-      steps {
-        dir("${env.WORKSPACE}") {
-          sh 'zip -r deploy-1.0.zip ./scripts appspec.yml'
-          sh 'aws s3 cp --region ap-northeast-2 --acl private ./deploy-1.0.zip s3://project02-terraform-status'
-          sh 'rm -rf ./deploy-1.0.zip'
-        }
-      }
-    }
-    stage('CodeDeploy Deploy') {
-      steps {
-        step([$class: 'AWSCodeDeployPublisher', applicationName: 'project02-production-in-place', credentials: 'AWSCredentials', deploymentConfig: 'CodeDeployDefault.OneAtATime', deploymentGroupAppspec: false, deploymentGroupName: 'project02-production-in-place', excludes: '', iamRoleArn: '', includes: '',region: "${REGION}", s3bucket: 'project02-terraform-status', s3prefix: '', subdirectory: '', versionFileName: 'deploy-1.0.zip', waitForCompletion: false])
-      }
-    }
+#    stage('Upload to S3') {
+#      steps {
+#        dir("${env.WORKSPACE}") {
+#          sh 'zip -r deploy-1.0.zip ./scripts appspec.yml'
+#          sh 'aws s3 cp --region ap-northeast-2 --acl private ./deploy-1.0.zip s3://project02-terraform-status'
+#          sh 'rm -rf ./deploy-1.0.zip'
+#        }
+#      }
+#    }
+#    stage('CodeDeploy Deploy') {
+#      steps {
+#        step([$class: 'AWSCodeDeployPublisher', applicationName: 'project02-production-in-place', credentials: 'AWSCredentials', deploymentConfig: 'CodeDeployDefault.OneAtATime', deploymentGroupAppspec: false, deploymentGroupName: 'project02-production-in-place', excludes: '', iamRoleArn: '', includes: '',region: "${REGION}", s3bucket: 'project02-terraform-status', s3prefix: '', subdirectory: '', versionFileName: 'deploy-1.0.zip', waitForCompletion: false])
+#      }
+#    }
   }
 }
