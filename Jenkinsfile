@@ -62,7 +62,6 @@ pipeline {
     stage('CodeDeploy Deploy') {
       steps {
         script {
-          def awsCLI = tool 'AWS-CLI'
           sh """
             ${awsCLI} deploy create-deployment \
             --application-name ${APPLICATION_NAME} \
