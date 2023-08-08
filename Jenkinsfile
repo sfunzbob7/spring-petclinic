@@ -68,7 +68,8 @@ pipeline {
                               " --deployment-group-name $APPLICATION_NAME" +
                               " --deployment-config-name $DEPLOY_CONFIG" +
                               " --file-exists-behavior OVERWRITE" +
-                              " --revision revisionType=ECR"
+                              " --revision revisionType=ECR,imageName=$ECR_REPOSITORY/sha256:b7a3aec2959b3e32deb21396428b5bb8691b9edfc88901d033ba8751f7991788"
+"
           sh(deploymentCmd)
         }
       }
