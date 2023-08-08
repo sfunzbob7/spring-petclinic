@@ -62,7 +62,7 @@ pipeline {
     stage('CodeDeploy Deploy') {
       steps {
         script {
-            def newImageTag = sh(returnStdout: true, script: "aws ecr describe-images --repository-name project02-spring-petclinic --image-ids imageTag=latest --query 'images[0].imageDigest' --output text").trim()
+            def newImageTag = sh(returnStdout: true, script: "aws ecr describe-images project02-spring-petclinic:1.0 --repository-name project02-spring-petclinic --image-ids 257307634175 imageTag=latest --query 'images[0].imageDigest' --output text").trim()
             env.IMAGE_TAG = newImageTag
         }
         echo 'Deploying to CodeDeploy...'
