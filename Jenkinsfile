@@ -61,8 +61,12 @@ pipeline {
     }
     stage('CodeDeploy Deploy') {
       steps {
+        script {
+            def newImageTag = sh(returnStdout: true, script: "aws ecr describe-images --repository-name project02-spring-petclinic --image-ids imageTag=latest --query 'images[0].imageDigest' --output text").trim()
+            env.IMAGE_TAG = newImageTag
+        }
         echo 'Deploying to CodeDeploy...'
-        sh 'codedeploy push --application project02-production-in-place --deployment-group project02-production-in-place --deployment-config-name project02-production-in-place --image-version 1.0'
+        sh 'codedeploy push --application project02-production-in-place --deployment-group project02-production-in-place --deployment-config-name project02-production-in-place --image-version latest'
       }
     }
   }
