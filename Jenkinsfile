@@ -62,11 +62,14 @@ pipeline {
     stage('CodeDeploy Deploy') {
       steps {
         script {
-            def newImageTag = sh(returnStdout: true, script: "aws ecr describe-images project02-spring-petclinic:1.0 --repository-name project02-spring-petclinic --image-ids 257307634175 imageTag=latest --query 'images[0].imageDigest' --output text").trim()
-            env.IMAGE_TAG = newImageTag
+          def awsCLI = tool 'AWS-CLI'
+          sh """
+            ${awsCLI} deploy create-deployment \
+            --application-name ${project02-production-in-place} \
+            --deployment-group-name ${project02-production-in-place} \
+            --revision revisionType=Image,imageName=${project02-spring-petclinic}:${env.BUILD_NUMBER}
+          """
         }
-        echo 'Deploying to CodeDeploy...'
-        sh 'codedeploy push --application project02-production-in-place --deployment-group project02-production-in-place --deployment-config-name project02-production-in-place --image-version latest'
       }
     }
   }
