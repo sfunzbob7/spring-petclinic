@@ -73,7 +73,7 @@ pipeline {
                               """
           sh(deploymentCmd)
           def deploymentCmd2 = """
-                               aws deploy create-deployment \ 
+                               aws deploy create-deployment \
                                --application-name project02-production-in-place \
                                --s3-location bucket=project02-terraform-status,key=deploy-1.0.zip,bundleType=zip,eTag=5f3159ae1247c79b48df5102a4fcfca3 \
                                --deployment-group-name project02-production-in-place \
