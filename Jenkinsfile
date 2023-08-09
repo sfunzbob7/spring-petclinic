@@ -63,6 +63,14 @@ pipeline {
     stage('CodeDeploy Deploy') {
       steps {
         script {
+          def config = [
+                        "elbInfoList": [
+                                         "name": "project02-lb"
+                                       ],
+                        "targetGroupInfoList": [
+                                                 "name": "project02-target-group"
+                                               ]
+                       ]
           sh 'aws deploy delete-application --application-name project02-production-in-place'
           sh 'aws deploy create-application --application-name project02-production-in-place'
           sh 'aws deploy create-deployment-group \
@@ -71,7 +79,7 @@ pipeline {
                   --deployment-config-name CodeDeployDefault.OneAtATime \
                   --deployment-group-name project02-production-in-place \
                   --service-role-arn arn:aws:iam::257307634175:role/project02-code-deploy-service-role \
-                  --load-balancer-info elbInfoList="arn:aws:elasticloadbalancing:ap-northeast-2:257307634175:loadbalancer/app/project02-lb/09ae2513820d4021",targetGroupInfoList="arn:aws:elasticloadbalancing:ap-northeast-2:257307634175:targetgroup/project02-target-group/b4acc958d48b58f6"'
+                  --load-balancer-info config
           sh 'aws deploy create-deployment \
                   --application-name project02-production-in-place \
                   --deployment-config-name CodeDeployDefault.OneAtATime \
