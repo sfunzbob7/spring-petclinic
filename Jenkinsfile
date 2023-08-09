@@ -65,18 +65,18 @@ pipeline {
         script {
           sh 'aws deploy create-application --application-name project02-production-in-place'
           sh 'aws deploy create-deployment-group \
-              --application-name project02-production-in-place \
-              --auto-scaling-groups PROJECT02-AUTOSCALING-GROUP \
-              --deployment-config-name CodeDeployDefault.OneAtATime \
-              --deployment-group-name project02-production-in-place \
-              --ec2-tag-filters Key=Name,Value=project02-production-in-place,Type=KEY_AND_VALUE \
-              --service-role-arn arn:aws:iam::257307634175:role/project02-code-deploy-service-role'
+                  --application-name project02-production-in-place \
+                  --auto-scaling-groups PROJECT02-AUTOSCALING-GROUP \
+                  --deployment-config-name CodeDeployDefault.OneAtATime \
+                  --deployment-group-name project02-production-in-place \
+                  --ec2-tag-filters Key=Name,Value=PROJECT02-AUTOSCALING-GROUP,Type=KEY_AND_VALUE \
+                  --service-role-arn arn:aws:iam::257307634175:role/project02-code-deploy-service-role'
           sh 'aws deploy create-deployment \
-              --application-name project02-production-in-place \
-              --deployment-config-name CodeDeployDefault.OneAtATime \
-              --deployment-group-name project02-production-in-place \
-              --description "My deployment" \
-              --s3-location bucket=project02-terraform-status,bundleType=zip,eTag=4ebd1538884458d87cef6ddfdc569a67,key=deploy-1.0.zip'
+                  --application-name project02-production-in-place \
+                  --deployment-config-name CodeDeployDefault.OneAtATime \
+                  --deployment-group-name project02-production-in-place \
+                  --description "My deployment" \
+                  --s3-location bucket=project02-terraform-status,bundleType=zip,key=deploy-1.0.zip'
         }
       }
     }
