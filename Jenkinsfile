@@ -76,7 +76,7 @@ pipeline {
                   --deployment-config-name CodeDeployDefault.OneAtATime \
                   --deployment-group-name project02-production-in-place \
                   --description "My deployment" \
-                  --github-location repository=sfunzbob7/spring-petclinic,commitId="08ce42a70a168bcd76c7a57dacf694366ced3aaf"'
+                  --s3-location bucket=project02-terraform-status,bundleType=zip,key=deploy-1.0.zip'
         }
       }
     }
