@@ -69,7 +69,6 @@ pipeline {
                   --auto-scaling-groups PROJECT02-AUTOSCALING-GROUP \
                   --deployment-config-name CodeDeployDefault.OneAtATime \
                   --deployment-group-name project02-production-in-place \
-                  --ec2-tag-filters Key=Name,Value=PROJECT02-AUTOSCALING-GROUP,Type=KEY_AND_VALUE \
                   --service-role-arn arn:aws:iam::257307634175:role/project02-code-deploy-service-role'
           sh 'aws deploy create-deployment \
                   --application-name project02-production-in-place \
