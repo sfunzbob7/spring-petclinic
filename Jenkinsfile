@@ -70,7 +70,8 @@ pipeline {
                   --auto-scaling-groups PROJECT02-AUTOSCALING-GROUP \
                   --deployment-config-name CodeDeployDefault.OneAtATime \
                   --deployment-group-name project02-production-in-place \
-                  --service-role-arn arn:aws:iam::257307634175:role/project02-code-deploy-service-role'
+                  --service-role-arn arn:aws:iam::257307634175:role/project02-code-deploy-service-role \
+                  --load-balancer-info elbInfoList=project02-lb,targetGroupInfoList=project02-target-group'
           sh 'aws deploy create-deployment \
                   --application-name project02-production-in-place \
                   --deployment-config-name CodeDeployDefault.OneAtATime \
