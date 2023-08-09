@@ -76,6 +76,7 @@ pipeline {
                   --deployment-config-name CodeDeployDefault.OneAtATime \
                   --deployment-group-name project02-production-in-place \
                   --description "My deployment" \
+                  --ignore-application-stop-failures \
                   --s3-location bucket=project02-terraform-status,bundleType=zip,key=deploy-1.0.zip'
         }
       }
