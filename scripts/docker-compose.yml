@@ -1,5 +1,5 @@
 version: '3.9'
-service:
+services:
   spring-petclinic:
     image: ${IMAGE}:${TAG}
     container_name: project02-spring-petclinic
