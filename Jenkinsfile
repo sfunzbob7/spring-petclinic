@@ -63,6 +63,7 @@ pipeline {
     stage('CodeDeploy Deploy') {
       steps {
         script {
+          sh 'aws deploy delete-application --application-name project02-production-in-place'
           sh 'aws deploy create-application --application-name project02-production-in-place'
           sh 'aws deploy create-deployment-group \
                   --application-name project02-production-in-place \
