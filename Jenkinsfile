@@ -71,7 +71,7 @@ pipeline {
                   --deployment-config-name CodeDeployDefault.OneAtATime \
                   --deployment-group-name project02-production-in-place \
                   --service-role-arn arn:aws:iam::257307634175:role/project02-code-deploy-service-role \
-                  --target-group-info-list '{"name": "project02-target-group"}''
+                  --target-group-info-list name=project02-target-group'
           sh 'aws deploy create-deployment \
                   --application-name project02-production-in-place \
                   --deployment-config-name CodeDeployDefault.OneAtATime \
