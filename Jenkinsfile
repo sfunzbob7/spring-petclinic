@@ -62,7 +62,22 @@ pipeline {
     }
     stage('CodeDeploy Deploy') {
       steps {
-        step([$class: 'AWSCodeDeployPublisher', applicationName: 'project02-production-in-place', credentials: 'AWSCredentials', deploymentConfig: 'CodeDeployDefault.OneAtATime', deploymentGroupAppspec: false, deploymentGroupName: 'project02-production-in-place', excludes: '', iamRoleArn: '', includes: '',region: "${REGION}", s3bucket: 'project02-terraform-status', s3prefix: '', subdirectory: '', versionFileName: 'deploy-1.0.zip', waitForCompletion: false])
+        script {
+          sh 'aws deploy create-application --application-name project02-production-in-place'
+          sh 'aws deploy create-deployment-group \
+              --application-name project02-production-in-place \
+              --auto-scaling-groups PROJECT02-AUTOSCALING-GROUP \
+              --deployment-config-name CodeDeployDefault.OneAtATime \
+              --deployment-group-name project02-production-in-place \
+              --ec2-tag-filters Key=Name,Value=project02-production-in-place,Type=KEY_AND_VALUE \
+              --service-role-arn arn:aws:iam::257307634175:role/project02-code-deploy-service-role'
+          sh 'aws deploy create-deployment \
+              --application-name project02-production-in-place \
+              --deployment-config-name CodeDeployDefault.OneAtATime \
+              --deployment-group-name project02-production-in-place \
+              --description "My deployment" \
+              --s3-location bucket=project02-terraform-status,bundleType=zip,eTag=4ebd1538884458d87cef6ddfdc569a67,key=deploy-1.0.zip'
+        }
       }
     }
   }
