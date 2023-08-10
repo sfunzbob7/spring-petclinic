@@ -60,17 +60,29 @@ pipeline {
         }
       }
     }
-    stage('CodeDeploy Deploy') {
+    stage('CodeDeploy Deploy Application') {
       steps {
         script {
           sh 'aws deploy delete-application --application-name project02-production-in-place'
           sh 'aws deploy create-application --application-name project02-production-in-place --compute-platform Server'
+        }
+      }
+    }
+    stage('CodeDeploy Deploy group') {
+      steps {
+        script {
           sh 'aws deploy create-deployment-group \
                   --application-name project02-production-in-place \
                   --auto-scaling-groups PROJECT02-AUTOSCALING-GROUP \
                   --deployment-config-name CodeDeployDefault.OneAtATime \
                   --deployment-group-name project02-production-in-place \
                   --service-role-arn arn:aws:iam::257307634175:role/project02-code-deploy-service-role'
+        }
+      }
+    }
+    stage('CodeDeploy') {
+      steps {
+        script {
           sh 'aws deploy create-deployment \
                   --application-name project02-production-in-place \
                   --deployment-config-name CodeDeployDefault.OneAtATime \
