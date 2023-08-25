@@ -55,7 +55,7 @@ pipeline {
       steps {
         dir("${env.WORKSPACE}") {
           sh 'zip -r deploy-1.0.zip ./scripts appspec.yml'
-          sh 'aws s3 cp --region ap-northeast-2 --acl private ./deploy-1.0.zip s3://project02-terraform-status'
+          sh 'aws s3 cp --region ap-northeast-2 --acl private ./deploy-1.0.zip s3://project02-deploy'
           sh 'rm -rf ./deploy-1.0.zip'
         }
       }
@@ -89,7 +89,7 @@ pipeline {
                   --deployment-group-name project02-production-in-place \
                   --description "My deployment" \
                   --ignore-application-stop-failures \
-                  --s3-location bucket=project02-terraform-status,bundleType=zip,key=deploy-1.0.zip'
+                  --s3-location bucket=project02-deploy,bundleType=zip,key=deploy-1.0.zip'
         }
       }
     }
